@@ -1,8 +1,6 @@
 import gym
 import numpy as np
 
-from ipdb import set_trace as bp
-
 from text_flappy_bird_gym.envs.text_flappy_bird_logic import FlappyBirdLogic
 
 class TextFlappyBirdEnvSimple(gym.Env):
