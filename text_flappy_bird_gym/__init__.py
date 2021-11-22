@@ -7,5 +7,5 @@ register(
 
 register(
     id='TextFlappyBird-screen-v0',
-    entry_point='text_flappy_bird_gym.envs:TextFlappyBirdEnvText'
+    entry_point='text_flappy_bird_gym.envs:TextFlappyBirdEnvScreen'
 )

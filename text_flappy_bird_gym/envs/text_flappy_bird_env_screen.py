@@ -3,7 +3,35 @@ import numpy as np
 
 from text_flappy_bird_gym.envs.text_flappy_bird_logic import FlappyBirdLogic
 
-class TextFlappyBirdEnvText(gym.Env):
+class TextFlappyBirdEnvScreen(gym.Env):
+  """
+  Implementation of a simple Flappy Bird OpenAI Gym environment that yields the
+  game's screen state as observations and renders each step in a text format.
+
+  borrows from: https://github.com/Talendar/flappy-bird-gym
+
+  @ denotes the bird
+  [ left border of the screen
+  ] right border of the screen
+  - top border
+  ^ bottom border
+
+  Text Flappy Bird!
+  Score: 0
+  -----------------
+  [     |       | ]
+  [    @|       | ]
+  [     |         ]
+  [               ]
+  [               ]
+  [               ]
+  [             | ]
+  [     |       | ]
+  [     |       | ]
+  [     |       | ]
+  [     |       | ]
+  ^^^^^^^^^^^^^^^^^
+  """
 
   metadata = {'render.modes': ['human']}
 
