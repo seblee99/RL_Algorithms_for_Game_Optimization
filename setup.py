@@ -1,11 +1,13 @@
-from setuptools import setup
+import setuptools
 
-setup(name='text-flappy-bird-gym',
+setuptools.setup(name='text-flappy-bird-gym',
       version='0.0.1',
       author='Stergios C.',
       description='Implementation of two OpenAI Gym learning environments of a simple unit-pixel player version of the Flappy Bird.',
       install_requires=['gym', 'numpy'],  # And any other dependencies foo needs
       license="MIT License",
+      url="https://gitlab-research.centralesupelec.fr/stergios.christodoulidis/text-flappy-bird-gym",
+      packages=setuptools.find_packages(),
       python_requires=">=3.6",
       classifiers=[
         "Programming Language :: Python :: 3",
