@@ -44,6 +44,7 @@ class TextFlappyBirdEnvScreen(gym.Env):
 
     self._normalize_obs = normalize_obs
     self.action_space = gym.spaces.Discrete(2)
+    self.action_space_lut = {0:'Idle', 1:'Flap'}
     self.observation_space = gym.spaces.Box(0, 7, [*screen_size], dtype=np.int32)
     self._game = None
     self._render = None
@@ -117,6 +118,7 @@ class TextFlappyBirdEnvScreen(gym.Env):
       for j in range(r.shape[1]):
         r_str += lut[r[i,j]]
       r_str += '\n'
+    r_str += '('+self.action_space_lut[self._game.player_last_action] + ')\n'
     return r_str
 
   def close(self):

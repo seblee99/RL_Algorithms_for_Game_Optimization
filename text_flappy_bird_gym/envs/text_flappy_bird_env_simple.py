@@ -1,6 +1,8 @@
 import gym
 import numpy as np
 
+from ipdb import set_trace as bp
+
 from text_flappy_bird_gym.envs.text_flappy_bird_logic import FlappyBirdLogic
 
 class TextFlappyBirdEnvSimple(gym.Env):
@@ -45,6 +47,7 @@ class TextFlappyBirdEnvSimple(gym.Env):
 
     self._normalize_obs = normalize_obs
     self.action_space = gym.spaces.Discrete(2)
+    self.action_space_lut = {0:'Idle', 1:'Flap'}
     self.observation_space = gym.spaces.Box(-np.inf, np.inf, shape=(2,), dtype=np.float32)
     self._game = None
 
@@ -122,6 +125,7 @@ class TextFlappyBirdEnvSimple(gym.Env):
       for j in range(r.shape[1]):
         r_str += lut[r[i,j]]
       r_str += '\n'
+    r_str += '('+self.action_space_lut[self._game.player_last_action] + ')\n'
     return r_str
 
   def close(self):
