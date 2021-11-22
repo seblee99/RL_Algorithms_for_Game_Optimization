@@ -26,11 +26,11 @@ class FlappyBirdLogic:
     self.score = 0
 
     # Player's info:
-    self.player_alive = True   # player is alive at the beginning of the game
-    self.player_vel_y = 0      # player's velocity along Y (default = 0)
-    self.player_gravity = 1    # player's downward velocity (default = 1)
-    self.player_vel_flap = -1  # player's flap velocity (default = -2)
-    self.player_last_action = None
+    self.player_alive = True      # player is alive at the beginning of the game
+    self.player_vel_y = 0         # player's velocity along Y (default = 0)
+    self.player_gravity = 1       # player's downward velocity (default = 1)
+    self.player_vel_flap = -1     # player's flap velocity (default = -2)
+    self.player_last_action = 0   # player's initial action value (idle)
 
   def _get_random_pipe(self):
     """ Returns a randomly sampled pipe """
