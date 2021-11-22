@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='text_flappy_bird_gym',
+setup(name='text-flappy-bird-gym',
       version='0.0.1',
       author='Stergios C.',
       description='Implementation of two OpenAI Gym learning environments of a simple unit-pixel player version of the Flappy Bird.',
