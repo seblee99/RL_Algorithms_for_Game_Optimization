@@ -99,7 +99,15 @@ class TextFlappyBirdEnvSimple(gym.Env):
     6 : sky ('-')
     7 : floor ('^')
     """
-    lut = {0:' ', 1:'@',2:'|',3:'*',4:'[',5:']',6:'-',7:'^'}
+    lut = {0:' ', 
+           1:gym.utils.colorize('@',"yellow"),
+           2:gym.utils.colorize('|',"green"),
+           3:gym.utils.colorize('*',"red"),
+           4:'[',
+           5:']',
+           6:'-',
+           7:'^'}
+
     r = np.zeros((self._screen_size[0],self._screen_size[1]), dtype='int')
 
     if self._game.player_alive:
