@@ -53,7 +53,7 @@ class TextFlappyBirdEnvSimple(gym.Env):
     """
     The horizontal and vertical distance between the player and the center of the gap is returned as observation
     """
-    closest_upcoming_pipe = min([i for i,p in enumerate([pipe['x'] - self._game.player_x for pipe in self._game.upper_pipes]) if p>0])
+    closest_upcoming_pipe = min([i for i,p in enumerate([pipe['x'] - self._game.player_x for pipe in self._game.upper_pipes]) if p>=0])
     h_dist = self._game.upper_pipes[closest_upcoming_pipe]['x'] - self._game.player_x
     v_dist = self._game.upper_pipes[closest_upcoming_pipe]['y']+self._pipe_gap//2 - self._game.player_y
     if self._normalize_obs:
