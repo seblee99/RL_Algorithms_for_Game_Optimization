@@ -37,16 +37,24 @@ class TextFlappyBirdEnvSimple(gym.Env):
   metadata = {'render.modes': ['human']}
 
   def __init__(self, 
-               screen_size = (11, 7), 
-               pipe_gap = 2,
-               normalize_obs = True):
-    self._screen_size = screen_size
+               height = 15,
+               width = 20,
+               pipe_gap = 4):
+    self._screen_size = (width,height)
     self._pipe_gap = pipe_gap
 
-    self._normalize_obs = normalize_obs
     self.action_space = gym.spaces.Discrete(2)
     self.action_space_lut = {0:'Idle', 1:'Flap'}
-    self.observation_space = gym.spaces.Box(-np.inf, np.inf, shape=(2,), dtype=np.float32)
+
+    # These are the max and min values of the observation space
+    x_dist_max = self._screen_size[0]-int(self._screen_size[0]*0.3)
+    x_dist_min = 0
+    y_dist_max = self._screen_size[1]-1-int(self._pipe_gap//2)-1
+    y_dist_min = -x_dist_max
+    
+    self.observation_space = gym.spaces.Tuple(
+      (gym.spaces.Discrete(x_dist_max-x_dist_min),gym.spaces.Discrete(y_dist_max-y_dist_min))
+    )
     self._game = None
 
   def _get_observation(self):
@@ -54,12 +62,10 @@ class TextFlappyBirdEnvSimple(gym.Env):
     The horizontal and vertical distance between the player and the center of the gap is returned as observation
     """
     closest_upcoming_pipe = min([i for i,p in enumerate([pipe['x'] - self._game.player_x for pipe in self._game.upper_pipes]) if p>=0])
-    h_dist = self._game.upper_pipes[closest_upcoming_pipe]['x'] - self._game.player_x
-    v_dist = self._game.upper_pipes[closest_upcoming_pipe]['y']+self._pipe_gap//2 - self._game.player_y
-    if self._normalize_obs:
-            h_dist /= self._screen_size[0]
-            v_dist /= self._screen_size[1]
-    return np.array([h_dist, v_dist])
+    x_dist = self._game.upper_pipes[closest_upcoming_pipe]['x'] - self._game.player_x
+    y_dist = self._game.player_y-self._game.upper_pipes[closest_upcoming_pipe]['y']+self._pipe_gap//2
+
+    return (x_dist, y_dist)
 
   def step(self, action):
     """
@@ -131,7 +137,11 @@ class TextFlappyBirdEnvSimple(gym.Env):
       for j in range(r.shape[1]):
         r_str += lut[r[i,j]]
       r_str += '\n'
-    r_str += '('+self.action_space_lut[self._game.player_last_action] + ')\n'
+    r_str += 'Player Action ({})\n'.format(self.action_space_lut[self._game.player_last_action])
+
+    (dx,dy) = self._get_observation()
+    r_str += 'Distance From Pipe (x={},y={})\n'.format(dx,dy)
+
     return r_str
 
   def close(self):

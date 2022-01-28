@@ -28,8 +28,8 @@ class FlappyBirdLogic:
     # Player's info:
     self.player_alive = True      # player is alive at the beginning of the game
     self.player_vel_y = 0         # player's velocity along Y (default = 0)
-    self.player_gravity = 1       # player's downward velocity (default = 1)
-    self.player_vel_flap = -1     # player's flap velocity (default = -2)
+    self.player_gravity = 2       # player's downward velocity (default = 2)
+    self.player_vel_flap = -1     # player's flap velocity (default = -1)
     self.player_last_action = 0   # player's initial action value (idle)
 
   def _get_random_pipe(self):
@@ -66,8 +66,9 @@ class FlappyBirdLogic:
       self.player_vel_y = self.player_vel_flap
 
     # move player using current velocity
-    self.player_y += min(self.player_vel_y, self._screen_height)
+    self.player_y += self.player_vel_y
     self.player_y = int(max(self.player_y, 0))
+    self.player_y = int(min(self.player_y, self._screen_height))
     self.player_vel_y += self.player_gravity
 
     # checks if the player is still alive after this step.
