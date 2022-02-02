@@ -4,7 +4,7 @@ This repository contains the implementation of two OpenAI Gym learning environme
 
 It is inspired by the NetHack game and can be rendered within a terminal using simple character elements. The two environments differ only in the yielded observations. The `TextFlappyBird-screen-v0` returns the array that represents the current state of the game screen encoded as integers while the `TextFlappyBird-v0` returns the horizontal and vertical distance of the player to the closest upcoming pipe gap.
 
-![img](imgs/random_agent.gif)
+![img](imgs/TFB_agent.gif)
 
 ## Installation
 
