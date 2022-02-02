@@ -11,7 +11,7 @@ It is inspired by the NetHack game and can be rendered within a terminal using s
 You can install the gym using the following command:
 
 ```
-pip install text-flappy-bird-gym
+pip install git+https://gitlab-research.centralesupelec.fr/stergios.christodoulidis/text-flappy-bird-gym.git
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ import text_flappy_bird_gym
 if __name__ == '__main__':
 
     # initiate environment
-    env = gym.make('TextFlappyBird-screen-v0', screen_size=(15, 11), pipe_gap = 4)
+    env = gym.make('TextFlappyBird-v0', height = 15, width = 20, pipe_gap = 4)
     obs = env.reset()
 
     # iterate

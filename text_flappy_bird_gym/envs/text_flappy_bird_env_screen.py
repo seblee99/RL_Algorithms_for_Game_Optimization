@@ -36,16 +36,17 @@ class TextFlappyBirdEnvScreen(gym.Env):
   metadata = {'render.modes': ['human']}
 
   def __init__(self, 
-               screen_size = (11, 7), 
+               height = 15,
+               width = 20,
                pipe_gap = 2,
                normalize_obs = True):
-    self._screen_size = screen_size
+    self._screen_size = (width,height)
     self._pipe_gap = pipe_gap
 
     self._normalize_obs = normalize_obs
     self.action_space = gym.spaces.Discrete(2)
     self.action_space_lut = {0:'Idle', 1:'Flap'}
-    self.observation_space = gym.spaces.Box(0, 3, [*screen_size], dtype=np.int32)
+    self.observation_space = gym.spaces.Box(0, 3, [*self._screen_size], dtype=np.int32)
     self._game = None
     self._render = None
 
