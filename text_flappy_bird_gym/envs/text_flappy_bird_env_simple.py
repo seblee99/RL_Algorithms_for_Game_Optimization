@@ -63,7 +63,7 @@ class TextFlappyBirdEnvSimple(gym.Env):
     """
     closest_upcoming_pipe = min([i for i,p in enumerate([pipe['x'] - self._game.player_x for pipe in self._game.upper_pipes]) if p>=0])
     x_dist = self._game.upper_pipes[closest_upcoming_pipe]['x'] - self._game.player_x
-    y_dist = self._game.player_y-self._game.upper_pipes[closest_upcoming_pipe]['y']+self._pipe_gap//2
+    y_dist = self._game.player_y-self._game.upper_pipes[closest_upcoming_pipe]['y']-self._pipe_gap//2
 
     return (x_dist, y_dist)
 
