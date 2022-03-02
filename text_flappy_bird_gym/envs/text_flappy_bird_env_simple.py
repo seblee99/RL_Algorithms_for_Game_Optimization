@@ -53,7 +53,7 @@ class TextFlappyBirdEnvSimple(gym.Env):
     y_dist_min = -y_dist_max
     
     self.observation_space = gym.spaces.Tuple(
-      (gym.spaces.Discrete(x_dist_max-x_dist_min),gym.spaces.Discrete(y_dist_max-y_dist_min))
+      (gym.spaces.Discrete(x_dist_max-x_dist_min+1),gym.spaces.Discrete(y_dist_max-y_dist_min))
     )
     self._game = None
 
