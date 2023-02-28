@@ -90,7 +90,8 @@ class TextFlappyBirdEnvSimple(gym.Env):
     return obs, reward, done, info
 
 
-  def reset(self):
+  def reset(self, seed=None, options=None):
+    super().reset(seed=seed)
     self._game = FlappyBirdLogic(self._screen_size, self._pipe_gap)
     return self._get_observation()
 
