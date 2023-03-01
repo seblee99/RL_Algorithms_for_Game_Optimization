@@ -1,5 +1,5 @@
 import random
-from gym import logger
+from gymnasium import logger
 
 class FlappyBirdLogic:
   def __init__(self, screen_size, pipe_gap_size = 2):

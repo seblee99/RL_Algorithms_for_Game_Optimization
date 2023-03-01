@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 import numpy as np
 
 from text_flappy_bird_gym.envs.text_flappy_bird_logic import FlappyBirdLogic
@@ -34,7 +34,7 @@ class TextFlappyBirdEnvSimple(gym.Env):
   ^^^^^^^^^^^^^^^^^
   """
 
-  metadata = {'render.modes': ['human']}
+  metadata = {'render_modes': ['human'], "render_fps": 4}
 
   def __init__(self, 
                height = 15,
@@ -47,13 +47,13 @@ class TextFlappyBirdEnvSimple(gym.Env):
     self.action_space_lut = {0:'Idle', 1:'Flap'}
 
     # These are the max and min values of the observation space
-    x_dist_max = self._screen_size[0]-int(self._screen_size[0]*0.3)
+    x_dist_max = self._screen_size[0]-int(self._screen_size[0]*0.3)-1
     x_dist_min = 0
     y_dist_max = self._screen_size[1]-1-int(self._pipe_gap//2)-1
     y_dist_min = -y_dist_max
     
     self.observation_space = gym.spaces.Tuple(
-      (gym.spaces.Discrete(x_dist_max-x_dist_min+1),gym.spaces.Discrete(y_dist_max-y_dist_min))
+      (gym.spaces.Discrete(x_dist_max-x_dist_min+1),gym.spaces.Discrete(y_dist_max-y_dist_min, start=y_dist_min))
     )
     self._game = None
 
@@ -65,7 +65,15 @@ class TextFlappyBirdEnvSimple(gym.Env):
     x_dist = self._game.upper_pipes[closest_upcoming_pipe]['x'] - self._game.player_x
     y_dist = self._game.player_y-self._game.upper_pipes[closest_upcoming_pipe]['y']-self._pipe_gap//2
 
-    return (x_dist, y_dist)
+    return (x_dist,y_dist)
+
+  def _get_info(self):
+    obs = self._get_observation()
+    return {
+      "score": self._game.score, 
+      "player":[self._game.player_x, self._game.player_y],
+      "distance": np.sqrt(obs[0]**2+obs[1]**2),
+    }
 
   def step(self, action):
     """
@@ -82,18 +90,16 @@ class TextFlappyBirdEnvSimple(gym.Env):
 
     reward = 1 # As long as it stays alive the cummulative reward is increased
 
-    info = {"score": self._game.score, 
-            "player":[self._game.player_x, self._game.player_y],
-            "action": action,
-            "alive": alive}
-
-    return obs, reward, done, info
+    info = self._get_info()
+    return obs, reward, done, False, info
 
 
   def reset(self, seed=None, options=None):
     super().reset(seed=seed)
     self._game = FlappyBirdLogic(self._screen_size, self._pipe_gap)
-    return self._get_observation()
+    obs = self._get_observation()
+    info = self._get_info()
+    return obs, info
 
   def render(self, mode='human'):
     """
@@ -141,7 +147,7 @@ class TextFlappyBirdEnvSimple(gym.Env):
     r_str += 'Player Action ({})\n'.format(self.action_space_lut[self._game.player_last_action])
 
     (dx,dy) = self._get_observation()
-    r_str += 'Distance From Pipe (x={},y={})\n'.format(dx,dy)
+    r_str += 'Distance From Pipe (dx={},dy={})\n'.format(dx,dy)
 
     return r_str
 
