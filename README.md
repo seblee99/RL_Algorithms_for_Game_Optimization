@@ -19,7 +19,7 @@ pip install git+https://gitlab-research.centralesupelec.fr/stergios.christodouli
 ```python
 
 import os, sys
-import gym
+import gymnasium as gym
 import time
 
 import text_flappy_bird_gym

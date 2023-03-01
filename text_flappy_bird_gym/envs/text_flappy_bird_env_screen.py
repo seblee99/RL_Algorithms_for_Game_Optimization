@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 import numpy as np
 
 from text_flappy_bird_gym.envs.text_flappy_bird_logic import FlappyBirdLogic
@@ -33,7 +33,7 @@ class TextFlappyBirdEnvScreen(gym.Env):
   ^^^^^^^^^^^^^^^^^
   """
 
-  metadata = {'render.modes': ['human']}
+  metadata = {'render_modes': ['human'], "render_fps": 4}
 
   def __init__(self, 
                height = 15,
@@ -57,6 +57,13 @@ class TextFlappyBirdEnvScreen(gym.Env):
     self.render()
     return self._render
 
+  def _get_info(self):
+    obs = self._get_observation()
+    info = {"score": self._game.score, 
+            "player":[self._game.player_x, self._game.player_y],
+            }
+    return info
+
   def step(self, action):
     """
     Given an action it returns
@@ -72,17 +79,15 @@ class TextFlappyBirdEnvScreen(gym.Env):
 
     reward = 1 # As long as it stays alive the cummulative reward is increased
 
-    info = {"score": self._game.score, 
-            "player":[self._game.player_x, self._game.player_y],
-            "action": action,
-            "alive": alive}
+    info = self._get_info()
 
-    return obs, reward, done, info
+    return obs, reward, done, False, info
 
 
-  def reset(self):
+  def reset(self, seed=None, options=None):
+    super().reset(seed=seed)
     self._game = FlappyBirdLogic(self._screen_size, self._pipe_gap)
-    return self._get_observation()
+    return self._get_observation(), self._get_info()
 
   def render(self, mode='human'):
     """
