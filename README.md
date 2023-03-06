@@ -37,7 +37,7 @@ if __name__ == '__main__':
         action = env.action_space.sample()  # for an agent, action = agent.policy(observation)
 
         # Appy action and return new observation of the environment
-        obs, reward, done, info = env.step(action)
+        obs, reward, done, _, info = env.step(action)
 
         # Render the game
         os.system("clear")
