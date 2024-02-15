@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(name='text-flappy-bird-gym',
-      version='0.1.0',
+      version='0.1.1',
       author='Stergios C.',
       description='Implementation of two OpenAI Gym learning environments of a simple unit-pixel player version of the Flappy Bird.',
       install_requires=['gymnasium==0.29.0', 'numpy'],  # And any other dependencies foo needs
